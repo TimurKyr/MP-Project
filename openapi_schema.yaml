@@ -1,0 +1,1409 @@
+openapi: 3.1.0
+info:
+  title: Your API
+  version: 1.0.0
+paths:
+  /objects/:
+    get:
+      tags:
+      - Objects
+      summary: Get Objects
+      description: 'Retrieve all objects with optional filtering.
+
+        Filters are passed as query parameters.'
+      operationId: get_objects_objects__get
+      parameters:
+      - name: status_id
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Status Id
+      - name: class_name
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Class Name
+      - name: owner_id
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Owner Id
+      - name: industry_id
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Industry Id
+      - name: locality_id
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Locality Id
+      - name: country_id
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Country Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ObjectResponse'
+                title: Response Get Objects Objects  Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    post:
+      tags:
+      - Objects
+      summary: Create Object
+      description: "Create a new object in the database.\nExample:\nobject_data =\
+        \ {\n    \"create_user\": str,\n    \"owner\": {\n        \"bin\": int,\n\
+        \        \"name\": str,\n        \"abbreviation\": str,\n        \"mp_share\"\
+        : Optional[int],\n    },\n    \"industry_id\": str,\n    \"address_id\": int,\n\
+        \    \"year_construction\": Optional[int],\n    \"year_purchase\": Optional[int],\n\
+        \    \"document\": {\n        \"type_name\": str,\n        \"number\": int,\n\
+        \        \"date\": str,\n    },\n    \"contract\": {\n        \"object_cost_kzt\"\
+        : float,\n        \"object_cost_usd\": float,\n        \"market_cost_kzt\"\
+        : float,\n        \"date\": str,\n    },\n    \"class_name\": str,\n    \"\
+        floors_below\": int,\n    \"floors_above\": int,\n    \"area_total\": float,\n\
+        \    \"area_rentable\": float,\n    \"parking_closed\": int,\n    \"parking_open\"\
+        : int,\n    \"plot_owned\": float,\n    \"plot_rent\": float,\n    \"status_id\"\
+        : int,\n}"
+      operationId: create_object_objects__post
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ObjectCreateRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /objects/{object_id}:
+    get:
+      tags:
+      - Objects
+      summary: Get Object By Id
+      description: Retrieve an object by its ID.
+      operationId: get_object_by_id_objects__object_id__get
+      parameters:
+      - name: object_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Object Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /objects/{object_id}/:
+    patch:
+      tags:
+      - Objects
+      summary: Update Object
+      description: Partially update an object by ID.
+      operationId: update_object_objects__object_id___patch
+      parameters:
+      - name: object_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Object Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ObjectUpdateRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /owners/:
+    get:
+      tags:
+      - Owners
+      summary: Get Owners
+      description: Retrieve all owners
+      operationId: get_owners_owners__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/OwnerResponse'
+                type: array
+                title: Response Get Owners Owners  Get
+    post:
+      tags:
+      - Owners
+      summary: Create Owner
+      description: "Create a new owner.\nExample:\nowner_data = {\n    \"create_user\"\
+        : str\n    \"bin\": int,\n    \"name\": str,\n    \"abbreviation\": str\n\
+        \    \"mp_share\": int\n}"
+      operationId: create_owner_owners__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OwnerCreateRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OwnerResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /owners/{owner_id}:
+    get:
+      tags:
+      - Owners
+      summary: Get Owner By Id
+      description: Retrieve an owner by its ID.
+      operationId: get_owner_by_id_owners__owner_id__get
+      parameters:
+      - name: owner_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Owner Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OwnerResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /owners/{owner_id}/:
+    patch:
+      tags:
+      - Owners
+      summary: Update Owner
+      description: Partially update an owner by ID.
+      operationId: update_owner_owners__owner_id___patch
+      parameters:
+      - name: owner_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Owner Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OwnerUpdateRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OwnerResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /industries/:
+    get:
+      tags:
+      - Industries
+      summary: Get Industries
+      description: Retrieve all industries
+      operationId: get_industries_industries__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/IndustryResponse'
+                type: array
+                title: Response Get Industries Industries  Get
+    post:
+      tags:
+      - Industries
+      summary: Create Industry
+      description: "Create a new industry.\nExample:\nindustry_data = {\n    \"create_user\"\
+        : str,\n    \"name\": str\n}"
+      operationId: create_industry_industries__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IndustryCreateRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IndustryResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /industries/{industry_id}:
+    get:
+      tags:
+      - Industries
+      summary: Get Industry By Id
+      description: Retrieve an industry by its ID.
+      operationId: get_industry_by_id_industries__industry_id__get
+      parameters:
+      - name: industry_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Industry Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IndustryResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /industries/{industry_id}/:
+    patch:
+      tags:
+      - Industries
+      summary: Update Industry
+      description: Partially update an industry by ID.
+      operationId: update_industry_industries__industry_id___patch
+      parameters:
+      - name: industry_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Industry Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IndustryUpdateRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IndustryResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /documents/{document_id}:
+    get:
+      tags:
+      - Documents
+      summary: Get Document By Id
+      description: Retrieve a document by its ID.
+      operationId: get_document_by_id_documents__document_id__get
+      parameters:
+      - name: document_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Document Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /documents/:
+    post:
+      tags:
+      - Documents
+      summary: Create Document
+      description: "Create a new document.\nExample:\ndocument_data = {\n    \"type_id\"\
+        : int,\n    \"number\": str,\n    \"date\": date\n}"
+      operationId: create_document_documents__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DocumentCreateRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /documents/types/:
+    get:
+      tags:
+      - Documents
+      summary: Get Document Types
+      description: Retrieve all document types
+      operationId: get_document_types_documents_types__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/DocumentTypeResponse'
+                type: array
+                title: Response Get Document Types Documents Types  Get
+    post:
+      tags:
+      - Documents
+      summary: Create Document Type
+      description: "Create a new document type.\nExample:\ndocument_type_data = {\n\
+        \    \"name\": str\n}"
+      operationId: create_document_type_documents_types__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DocumentTypeCreateRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentTypeResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /documents/types/{document_type_id}:
+    get:
+      tags:
+      - Documents
+      summary: Get Document Type By Id
+      description: Retrieve a document type by its ID.
+      operationId: get_document_type_by_id_documents_types__document_type_id__get
+      parameters:
+      - name: document_type_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Document Type Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentTypeResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /documents/types/{document_type_id}/:
+    patch:
+      tags:
+      - Documents
+      summary: Update Document Type
+      description: Partially update an document type by ID.
+      operationId: update_document_type_documents_types__document_type_id___patch
+      parameters:
+      - name: document_type_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Document Type Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DocumentTypeUpdateRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentTypeUpdateRequest'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /contracts/{contract_id}:
+    get:
+      tags:
+      - Contracts
+      summary: Get Contract By Id
+      description: Retrieve a contract by its ID.
+      operationId: get_contract_by_id_contracts__contract_id__get
+      parameters:
+      - name: contract_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Contract Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /contracts/:
+    post:
+      tags:
+      - Contracts
+      summary: Create Contract
+      description: "Create a new contract.\nExample:\ncontract_data = {\n    \"object_cost_kzt\"\
+        : float\n    \"object_cost_usd\": float\n    \"market_cost_kzt\": float\n\
+        \    \"date\": date\n}"
+      operationId: create_contract_contracts__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContractCreateRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /statuses/:
+    get:
+      tags:
+      - Statuses
+      summary: Get Statuses
+      description: Retrieve all statuses
+      operationId: get_statuses_statuses__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/StatusResponse'
+                type: array
+                title: Response Get Statuses Statuses  Get
+    post:
+      tags:
+      - Statuses
+      summary: Create Status
+      description: "Create a new status.\nExample:\nowner_data = {\n    \"create_user\"\
+        : str\n    \"name\": str,\n}"
+      operationId: create_status_statuses__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StatusCreateRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /statuses/{status_id}:
+    get:
+      tags:
+      - Statuses
+      summary: Get Status By Id
+      description: Retrieve a status by its ID.
+      operationId: get_status_by_id_statuses__status_id__get
+      parameters:
+      - name: status_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Status Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /statuses/{status_id}/:
+    patch:
+      tags:
+      - Statuses
+      summary: Update Status
+      description: Partially update a status by ID.
+      operationId: update_status_statuses__status_id___patch
+      parameters:
+      - name: status_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Status Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StatusUpdateRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /:
+    get:
+      summary: Root
+      operationId: root__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /export-all:
+    get:
+      summary: Export All
+      operationId: export_all_export_all_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+components:
+  schemas:
+    ContractCreateRequest:
+      properties:
+        object_cost_kzt:
+          type: number
+          title: Object Cost Kzt
+        object_cost_usd:
+          type: number
+          title: Object Cost Usd
+        market_cost_kzt:
+          type: number
+          title: Market Cost Kzt
+        date:
+          type: string
+          format: date
+          title: Date
+      type: object
+      required:
+      - object_cost_kzt
+      - object_cost_usd
+      - market_cost_kzt
+      - date
+      title: ContractCreateRequest
+    ContractResponse:
+      properties:
+        id:
+          type: integer
+          title: Id
+        object_cost_kzt:
+          type: number
+          title: Object Cost Kzt
+        object_cost_usd:
+          type: number
+          title: Object Cost Usd
+        market_cost_kzt:
+          type: number
+          title: Market Cost Kzt
+        date:
+          type: string
+          format: date
+          title: Date
+      type: object
+      required:
+      - id
+      - object_cost_kzt
+      - object_cost_usd
+      - market_cost_kzt
+      - date
+      title: ContractResponse
+    DocumentCreateRequest:
+      properties:
+        type_id:
+          type: integer
+          title: Type Id
+        number:
+          type: string
+          title: Number
+        date:
+          type: string
+          format: date
+          title: Date
+      type: object
+      required:
+      - type_id
+      - number
+      - date
+      title: DocumentCreateRequest
+    DocumentResponse:
+      properties:
+        id:
+          type: integer
+          title: Id
+        type_id:
+          type: integer
+          title: Type Id
+        number:
+          type: string
+          title: Number
+        date:
+          type: string
+          format: date
+          title: Date
+      type: object
+      required:
+      - id
+      - type_id
+      - number
+      - date
+      title: DocumentResponse
+    DocumentTypeCreateRequest:
+      properties:
+        name:
+          type: string
+          title: Name
+      type: object
+      required:
+      - name
+      title: DocumentTypeCreateRequest
+    DocumentTypeResponse:
+      properties:
+        id:
+          type: integer
+          title: Id
+        name:
+          type: string
+          title: Name
+      type: object
+      required:
+      - id
+      - name
+      title: DocumentTypeResponse
+    DocumentTypeUpdateRequest:
+      properties:
+        name:
+          type: string
+          title: Name
+      type: object
+      required:
+      - name
+      title: DocumentTypeUpdateRequest
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    IndustryCreateRequest:
+      properties:
+        create_user:
+          type: string
+          title: Create User
+        name:
+          type: string
+          title: Name
+      type: object
+      required:
+      - create_user
+      - name
+      title: IndustryCreateRequest
+    IndustryResponse:
+      properties:
+        id:
+          type: integer
+          title: Id
+        name:
+          type: string
+          title: Name
+        create_user:
+          type: string
+          title: Create User
+        update_user:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Update User
+        create_date:
+          type: string
+          format: date
+          title: Create Date
+        update_date:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Update Date
+      type: object
+      required:
+      - id
+      - name
+      - create_user
+      - update_user
+      - create_date
+      - update_date
+      title: IndustryResponse
+    IndustryUpdateRequest:
+      properties:
+        update_user:
+          type: string
+          title: Update User
+        name:
+          type: string
+          title: Name
+      type: object
+      required:
+      - update_user
+      - name
+      title: IndustryUpdateRequest
+    ObjectCreateRequest:
+      properties:
+        create_user:
+          type: string
+          title: Create User
+        name:
+          type: string
+          title: Name
+        owner:
+          $ref: '#/components/schemas/OwnerCreate'
+        industry_id:
+          type: integer
+          title: Industry Id
+        address_id:
+          type: integer
+          title: Address Id
+        year_construction:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Year Construction
+        year_purchase:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Year Purchase
+        document:
+          $ref: '#/components/schemas/DocumentCreateRequest'
+        contract:
+          $ref: '#/components/schemas/ContractCreateRequest'
+        class_name:
+          type: string
+          title: Class Name
+        floors_below:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Floors Below
+        floors_above:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Floors Above
+        area_total:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Area Total
+        area_rentable:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Area Rentable
+        parking_closed:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Parking Closed
+        parking_open:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Parking Open
+        plot_owned:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Plot Owned
+        plot_rent:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Plot Rent
+        status_id:
+          type: integer
+          title: Status Id
+      type: object
+      required:
+      - create_user
+      - name
+      - owner
+      - industry_id
+      - address_id
+      - document
+      - contract
+      - class_name
+      - status_id
+      title: ObjectCreateRequest
+    ObjectResponse:
+      properties:
+        id:
+          type: integer
+          title: Id
+        name:
+          type: string
+          title: Name
+        owner_id:
+          type: integer
+          title: Owner Id
+        industry_id:
+          type: integer
+          title: Industry Id
+        address_id:
+          type: integer
+          title: Address Id
+        year_construction:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Year Construction
+        year_purchase:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Year Purchase
+        document_id:
+          type: integer
+          title: Document Id
+        contract_id:
+          type: integer
+          title: Contract Id
+        class_name:
+          type: string
+          title: Class Name
+        floors_below:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Floors Below
+        floors_above:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Floors Above
+        area_total:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Area Total
+        area_rentable:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Area Rentable
+        parking_closed:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Parking Closed
+        parking_open:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Parking Open
+        plot_owned:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Plot Owned
+        plot_rent:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Plot Rent
+        status_id:
+          type: integer
+          title: Status Id
+        create_user:
+          type: string
+          title: Create User
+        update_user:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Update User
+        create_date:
+          type: string
+          format: date
+          title: Create Date
+        update_date:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Update Date
+      type: object
+      required:
+      - id
+      - name
+      - owner_id
+      - industry_id
+      - address_id
+      - document_id
+      - contract_id
+      - class_name
+      - status_id
+      - create_user
+      - create_date
+      title: ObjectResponse
+    ObjectUpdateRequest:
+      properties:
+        update_user:
+          type: string
+          title: Update User
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        owner:
+          anyOf:
+          - $ref: '#/components/schemas/OwnerCreate'
+          - type: 'null'
+        industry_id:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Industry Id
+        address_id:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Address Id
+        year_construction:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Year Construction
+        year_purchase:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Year Purchase
+        document:
+          anyOf:
+          - $ref: '#/components/schemas/DocumentCreateRequest'
+          - type: 'null'
+        contract:
+          anyOf:
+          - $ref: '#/components/schemas/ContractCreateRequest'
+          - type: 'null'
+        class_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Class Name
+        floors_below:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Floors Below
+        floors_above:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Floors Above
+        area_total:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Area Total
+        area_rentable:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Area Rentable
+        parking_closed:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Parking Closed
+        parking_open:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Parking Open
+        plot_owned:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Plot Owned
+        plot_rent:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Plot Rent
+        status_id:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Status Id
+      type: object
+      required:
+      - update_user
+      title: ObjectUpdateRequest
+    OwnerCreate:
+      properties:
+        create_user:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Create User
+        bin:
+          type: integer
+          title: Bin
+        name:
+          type: string
+          title: Name
+        abbreviation:
+          type: string
+          title: Abbreviation
+        mp_share:
+          type: integer
+          title: Mp Share
+      type: object
+      required:
+      - bin
+      - name
+      - abbreviation
+      - mp_share
+      title: OwnerCreate
+    OwnerCreateRequest:
+      properties:
+        create_user:
+          type: string
+          title: Create User
+        bin:
+          type: integer
+          title: Bin
+        name:
+          type: string
+          title: Name
+        abbreviation:
+          type: string
+          title: Abbreviation
+        mp_share:
+          type: integer
+          title: Mp Share
+      type: object
+      required:
+      - create_user
+      - bin
+      - name
+      - abbreviation
+      - mp_share
+      title: OwnerCreateRequest
+    OwnerResponse:
+      properties:
+        id:
+          type: integer
+          title: Id
+        bin:
+          type: integer
+          title: Bin
+        name:
+          type: string
+          title: Name
+        abbreviation:
+          type: string
+          title: Abbreviation
+        mp_share:
+          type: integer
+          title: Mp Share
+        create_user:
+          type: string
+          title: Create User
+        update_user:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Update User
+        create_date:
+          type: string
+          format: date
+          title: Create Date
+        update_date:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Update Date
+      type: object
+      required:
+      - id
+      - bin
+      - name
+      - abbreviation
+      - mp_share
+      - create_user
+      - create_date
+      title: OwnerResponse
+    OwnerUpdateRequest:
+      properties:
+        update_user:
+          type: string
+          title: Update User
+        bin:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Bin
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        abbreviation:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Abbreviation
+        mp_share:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Mp Share
+      type: object
+      required:
+      - update_user
+      title: OwnerUpdateRequest
+    StatusCreateRequest:
+      properties:
+        create_user:
+          type: string
+          title: Create User
+        name:
+          type: string
+          title: Name
+      type: object
+      required:
+      - create_user
+      - name
+      title: StatusCreateRequest
+    StatusResponse:
+      properties:
+        id:
+          type: integer
+          title: Id
+        name:
+          type: string
+          title: Name
+        create_user:
+          type: string
+          title: Create User
+        update_user:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Update User
+        create_date:
+          type: string
+          format: date
+          title: Create Date
+        update_date:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Update Date
+      type: object
+      required:
+      - id
+      - name
+      - create_user
+      - create_date
+      title: StatusResponse
+    StatusUpdateRequest:
+      properties:
+        update_user:
+          type: string
+          title: Update User
+        name:
+          type: string
+          title: Name
+      type: object
+      required:
+      - update_user
+      - name
+      title: StatusUpdateRequest
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
